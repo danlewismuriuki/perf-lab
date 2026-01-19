@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+    
+    // Environment Settings
+    "module": "CommonJS",
+    "target": "ES2022",  // Better than esnext for Node.js
+    "lib": ["ES2022"],   // Explicitly set for Node.js
+    
+    // Node.js type definitions
+    "types": ["node"],
+    
+    // Output Settings
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    
+    // Strictness - adjusted for benchmarks
+    "strict": true,
+    "noUncheckedIndexedAccess": false,  // Disable for array access in benchmarks
+    
+    // Module Resolution
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    
+    // Removed React/JSX settings
+    // "jsx": "react-jsx",                    // REMOVE for Node.js
+    // "verbatimModuleSyntax": true,          // REMOVE - conflicts with CommonJS
+    // "isolatedModules": true,               // REMOVE - not needed for tsc
+    // "noUncheckedSideEffectImports": true,  // REMOVE - experimental
+    // "exactOptionalPropertyTypes": true,    // REMOVE - too strict for lab
+    // "moduleDetection": "force"             // REMOVE - experimental
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
