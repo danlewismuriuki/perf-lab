@@ -25,9 +25,6 @@ This repo is for:
 - **Profiling** hot paths with flame graphs
 - **Learning** how V8 and Node behave under load
 
-> This is **not a product repo**.  
-> It is a **learning and experimentation lab**.
-
 ---
 
 ## Tooling Used
