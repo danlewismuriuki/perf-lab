@@ -4,10 +4,15 @@
   "description": "Node.js Performance Lab",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
+    "benchmark": "tsc && node dist/quick/index.js",
+    "benchmark:loops": "tsc && node dist/quick/loop-benchmark.js",
+    "benchmark:async": "tsc && node dist/quick/async-loops.js",
+    "benchmark:data": "tsc && node dist/quick/data-structures.js",
+    "benchmark:strings": "tsc && node dist/quick/string-operations.js",
+    "benchmark:functions": "tsc && node dist/quick/function-calls.js",
     "build": "tsc",
-    "start": "node dist/quick/loops.js",
-    "typecheck": "tsc --noEmit"
+    "clean": "rm -rf dist",
+    "watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",
