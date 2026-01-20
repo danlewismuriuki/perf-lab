@@ -1,7 +1,5 @@
 import { performance, PerformanceObserver } from 'perf_hooks';
 import v8 from 'v8';
-import fs from 'fs';
-import { Readable } from 'stream';
 
 export class ProfilingTools {
   static async runAll() {
@@ -10,7 +8,6 @@ export class ProfilingTools {
     
     this.performanceObserverDemo();
     this.v8ProfilerDemo();
-    await this.memorySnapshotDemo();
     this.cpuProfilingDemo();
   }
   
@@ -26,8 +23,10 @@ export class ProfilingTools {
     
     obs.observe({ entryTypes: ['measure'] });
     
+    // Mark and measure
     performance.mark('start');
     
+    // Simulate work
     let sum = 0;
     for (let i = 0; i < 1000000; i++) sum += i;
     
@@ -52,81 +51,26 @@ export class ProfilingTools {
     }
   }
   
-  static async memorySnapshotDemo() {
-    console.log('\n📸 Memory Snapshot Demo:');
-    
-    try {
-      const snapshotStream = v8.getHeapSnapshot();
-      
-      console.log('Taking heap snapshot...');
-      
-      const chunks: Buffer[] = [];
-      let totalSize = 0;
-      
-      for await (const chunk of snapshotStream) {
-        chunks.push(chunk);
-        totalSize += chunk.length;
-      }
-      
-      console.log(`Snapshot size: ${(totalSize / 1024 / 1024).toFixed(2)}MB`);
-      
-      const objects = [];
-      for (let i = 0; i < 10000; i++) {
-        objects.push({ id: i, data: new Array(100).fill('x') });
-      }
-      
-      console.log(`Allocated ${objects.length} objects`);
-      
-      const snapshotStream2 = v8.getHeapSnapshot();
-      const chunks2: Buffer[] = [];
-      let totalSize2 = 0;
-      
-      for await (const chunk of snapshotStream2) {
-        chunks2.push(chunk);
-        totalSize2 += chunk.length;
-      }
-      
-      console.log(`After allocations: ${(totalSize2 / 1024 / 1024).toFixed(2)}MB`);
-      console.log(`Difference: ${((totalSize2 - totalSize) / 1024 / 1024).toFixed(2)}MB`);
-      
-      const timestamp = Date.now();
-      const filename = `heap-snapshot-${timestamp}.heapsnapshot`;
-      
-      const snapshotBuffer = Buffer.concat(chunks2);
-      fs.writeFileSync(filename, snapshotBuffer);
-      
-      console.log(`Snapshot saved to: ${filename}`);
-      console.log(`Analyze with: chrome://inspect → Memory → Load`);
-      
-      objects.length = 0;
-      
-      setTimeout(() => {
-        fs.unlinkSync(filename);
-        console.log(`Cleaned up: ${filename}`);
-      }, 3000);
-      
-    } catch (error) {
-      console.error('Error taking heap snapshot:', error);
-    }
-  }
-  
   static cpuProfilingDemo() {
-    console.log('\n CPU Profiling Demo:');
+    console.log('\n⚙️ CPU Profiling Instructions:');
     
-    console.log('Start CPU profiling for 3 seconds...');
-    
-    console.log('To profile CPU:');
+    console.log('To profile CPU usage:');
     console.log('  1. node --cpu-prof your-script.js');
-    console.log('  2. Creates .cpuprofile file');
-    console.log('  3. Open in Chrome DevTools → Performance');
+    console.log('  2. Creates a .cpuprofile file');
+    console.log('  3. Open in Chrome DevTools → Performance tab');
     
-    console.log('\nTo profile heap:');
+    console.log('\nTo profile heap allocation:');
     console.log('  1. node --heap-prof your-script.js');
-    console.log('  2. Creates .heapprofile file');
+    console.log('  2. Creates a .heapprofile file');
     console.log('  3. Analyze with clinic.js or Chrome DevTools');
+    
+    console.log('\nTo trace garbage collection:');
+    console.log('  1. node --trace-gc your-script.js');
+    console.log('  2. Shows GC events in console');
   }
 }
 
+// Run if called directly
 if (require.main === module) {
   ProfilingTools.runAll().catch(console.error);
 }
