@@ -6,15 +6,14 @@
   "scripts": {
     "benchmark": "tsc && node dist/index.js",
     "benchmark:quick": "tsc && node dist/quick/index.js",
-    "benchmark:loops": "tsc && node dist/quick/loop-benchmark.js",
-    "benchmark:async": "tsc && node dist/quick/async-loops.js",
-    "benchmark:data": "tsc && node dist/quick/data-structures.js",
-    "benchmark:strings": "tsc && node dist/quick/string-operations.js",
-    "benchmark:functions": "tsc && node dist/quick/function-calls.js",
+    "benchmark:real-world": "tsc && node dist/real-world/index.js",
     "benchmark:io": "tsc && node dist/io/benchmarks.js",
     "benchmark:memory": "tsc && node dist/memory/benchmarks.js",
     "benchmark:profile": "tsc && node dist/profiling/tools.js",
     "benchmark:advanced": "tsc && node dist/benchmark/runner.js",
+    "real-world:blocking": "tsc && node dist/real-world/slow-server.js",
+    "real-world:memory": "tsc && node dist/real-world/memory-leak.js",
+    "real-world:load": "tsc && node dist/real-world/load-test-demo.js",
     "build": "tsc",
     "clean": "rm -rf dist results",
     "watch": "tsc --watch",
@@ -27,5 +26,6 @@
     "@types/node": "^25.0.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
-  }
+  },
+  "dependencies": {}
 }
